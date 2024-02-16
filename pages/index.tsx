@@ -41,6 +41,7 @@ const Home = () => {
       <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar></Navbar>
       <Billboard />
+      <h1>Hello</h1>
       <div className="pb-40">
         <MovieList title="Populer Now 🔥" data={movies} />
         <MovieList title="My Favorites 🥰" data={favorites} />
