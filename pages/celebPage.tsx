@@ -9,11 +9,10 @@ import InfoModal from "@/components/InfoModal";
 import useMovieList from "@/hooks/useMovieList";
 import useFavorites from "@/hooks/useFavorites";
 import useInfoModalStore from "@/hooks/useInfoModalStore";
-import index from "@/pages/index";
-import movies from "@/pages/movies";
-import series from "@/pages/series";
 import MoviesDB from "@/components/MoviesDB";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import EventPage from "@/components/EventPage";
+import CelebrityPlaylist from "@/components/CelebPlaylist";
+
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
 
@@ -31,22 +30,18 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-const Home = () => {
-  const { data: movies = [] } = useMovieList();
-  const { data: favorites = [] } = useFavorites();
+const Event = () => {
   const { isOpen, closeModal } = useInfoModalStore();
 
   return (
     <>
       <InfoModal visible={isOpen} onClose={closeModal} />
-      <Navbar></Navbar>
-      <Billboard />
+      <Navbar />
       <div className="pb-40">
-        <MovieList title="Populer Now 🔥" data={movies} />
-        {/* <MovieList title="My Favorites 🥰" data={favorites} /> */}
+        <CelebrityPlaylist></CelebrityPlaylist>
       </div>
     </>
   );
 };
 
-export default Home;
+export default Event;

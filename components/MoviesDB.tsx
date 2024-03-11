@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
+import { FaRandom } from "react-icons/fa";
 
 interface Movie {
   id: number;
@@ -66,9 +67,22 @@ const MoviesDB = () => {
     setSelectedMovie(null);
   };
 
+  const openRandomMovie = () => {
+    const randomIndex = Math.floor(Math.random() * movies.length);
+    const randomMovie = movies[randomIndex];
+    openVideoPopup(randomMovie);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8 mt-10">
-      <h1 className="text-3xl font-semibold mb-8 text-white">Popular Movies</h1>
+      <h1 className="text-3xl font-semibold mb-8 text-white flex items-center">Popular Movies
+        <button
+          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full shadow-lg transition-all duration-300"
+          onClick={openRandomMovie}
+        >
+          <FaRandom />
+        </button>
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {movies.map((item) => (
           <div key={item.id} className="relative overflow-hidden rounded-lg shadow-lg">
@@ -78,30 +92,32 @@ const MoviesDB = () => {
               alt={`${item.title} Poster`}
               onClick={() => openVideoPopup(item)}
             />
-            {selectedMovie && selectedMovie.id === item.id && (
-              <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50" onClick={closeVideoPopup}>
-                <div className="p-8 bg-white rounded-lg overflow-hidden shadow-lg max-w-3xl">
-                  <h2 className="text-3xl font-semibold mb-4">{selectedMovie.title}</h2>
-                  <p className="text-lg mb-4">{selectedMovie.overview}</p>
-                  <p className="text-base">Release Date: {selectedMovie.release_date}</p>
-                  <br></br>
-                  <div> 
-                  {videos.find(video => video.id === selectedMovie.id.toString()) && (
-                    <YouTube style={{
-                        width: '644px',
-                        height: '367px', 
-                        border: 'none',
-                        borderRadius: '8px',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                      }} videoId={videos.find(video => video.id === selectedMovie.id.toString())!.key}></YouTube>
-                  )}
-                  </div>
-                </div>
-              </div>
-            )}
           </div>
         ))}
       </div>
+      {selectedMovie && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50" onClick={closeVideoPopup}>
+          <div className="p-8 bg-white rounded-lg overflow-hidden shadow-lg max-w-3xl">
+            <h2 className="text-3xl font-semibold mb-4">{selectedMovie.title}</h2>
+            <p className="text-lg mb-4">{selectedMovie.overview}</p>
+            <p className="text-base">Release Date: {selectedMovie.release_date}</p>
+            <br></br>
+            <div> 
+              {videos.find(video => video.id === selectedMovie.id.toString()) ? (
+                <YouTube style={{
+                    width: '644px',
+                    height: '367px', 
+                    border: 'none',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  }} videoId={videos.find(video => video.id === selectedMovie.id.toString())!.key}></YouTube>
+              ) : (
+                <p>No video available</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

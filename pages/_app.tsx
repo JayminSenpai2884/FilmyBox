@@ -13,6 +13,7 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
+      <title>FilmyBox</title>
         <Component {...pageProps} />
     </SessionProvider>
   )

@@ -2,9 +2,7 @@ import axios from 'axios';
 import React, { useCallback, useMemo, useEffect } from 'react';
 import { PlusIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { toast } from 'react-toastify';
-// At the top of your component file
 import 'react-toastify/dist/ReactToastify.css';
-
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useFavorites from '@/hooks/useFavorites';
@@ -42,7 +40,6 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ movieId }) => {
     });
     mutateFavorites();
 
-    // Show a success toast when movie is added to favorites
     const toastMessage = isFavorite ? "Removed from favorites" : "Successfully added to favorites";
     toast.success(toastMessage);
   }, [movieId, isFavorite, currentUser, mutate, mutateFavorites]);

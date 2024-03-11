@@ -4,12 +4,11 @@ import {
   MagnifyingGlassIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link"; // Import Link component from next/link
 
 import AccountMenu from "@/components/AccountMenu";
 import MobileMenu from "@/components/MobileMenu";
 import NavbarItem from "@/components/NavbarItem";
-
-import { Link } from 'react-router-dom';
 
 const TOP_OFFSET = 66;
 
@@ -45,13 +44,47 @@ const Navbar = () => {
       }`}
     >
       <div className="flex items-center justify-between px-4 md:px-16 py-3">
-        <img
-          className="h-10 lg:h-14 max-w-xs transition-transform transform hover:scale-110 rounded-full"
-          src="/images/logo.png"
-          alt="FilmyBox Logo"
-        />
-        <div className="hidden lg:flex items-center space-x-10 text-lg">
+        <Link href="/">
+          <span className="block">
+            <img
+              className="h-10 lg:h-14 max-w-xs transition-transform transform hover:scale-110 rounded-full"
+              src="/images/logo.png"
+              alt="FilmyBox Logo"
+            />
+          </span>
+        </Link>
+        <div className="hidden lg:flex items-center space-x-15 text-lg">
+          <div className="hidden lg:flex items-center space-x-15 text-lg">
+            <div className="flex items-center justify-center space-x-10">
+              <Link href="/movies">
+                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                  Movies
+                </span>
+              </Link>
+              <Link href="/series">
+                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                  Series
+                </span>
+              </Link>
+              <Link href="/celebPage">
+                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                  Celebrity Playlist
+                </span>
+              </Link>
+              <Link href="/event">
+                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                  Events
+                </span>
+              </Link>
+              <Link href="/accessibility">
+                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                  Accessibility
+                </span>
+              </Link>
+            </div>
+          </div>
         </div>
+
         <div className="flex items-center space-x-4 lg:space-x-0">
           <div onClick={toggleMobileMenu} className="lg:hidden cursor-pointer">
             <MagnifyingGlassIcon className="w-6 text-gray-300 hover:text-white transition rounded-full" />

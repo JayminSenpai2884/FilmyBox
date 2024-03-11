@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import YouTube from 'react-youtube';
+import { FaRandom } from "react-icons/fa";
 
 interface TVSeries {
   id: number;
@@ -66,9 +67,23 @@ const TVSeriesDB = () => {
     setSelectedSeries(null);
   };
 
+  const openRandomSeries = () => {
+    const randomIndex = Math.floor(Math.random() * series.length);
+    const randomSeries = series[randomIndex];
+    openVideoPopup(randomSeries);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-semibold mb-8">Popular TV Series</h1>
+      <br></br>
+      <h1 className="text-3xl font-semibold mb-8 mt-2 text-white flex items-center">Popular TV Series
+        <button
+          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 flex items-center"
+          onClick={openRandomSeries}
+        >
+          <FaRandom className="mr-2" />
+        </button>
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {series.map((item) => (
           <div key={item.id} className="relative overflow-hidden rounded-lg shadow-lg">
