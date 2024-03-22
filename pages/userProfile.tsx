@@ -10,7 +10,7 @@ const UserProfile = () => {
   const { data: favorites = [] } = useFavorites();
 
   return (
-    <div className="w-full h-full flex flex-col justify-between bg-zinc-900 rounded-md border border-gray-200 shadow-lg p-6">
+    <div className="w-full h-full flex flex-col justify-between bg-zinc-900 rounded-md shadow-lg p-6">
       <div>
         <div className="flex items-center mb-4 cursor-pointer">
           <img
@@ -29,11 +29,10 @@ const UserProfile = () => {
 
         <MovieList title="My Favorites" data={favorites} />
       </div>
-      <div className="text-center">
-        <br />
+      <div className="text-center mt-4">
         <Link href="/" passHref>
-          <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80">
-            back to home
+          <span className="text-white text-sm transition duration-300 hover:text-gray-300 hover:opacity-80">
+            Back to Home
           </span>
         </Link>
       </div>

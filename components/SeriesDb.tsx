@@ -78,10 +78,10 @@ const TVSeriesDB = () => {
       <br></br>
       <h1 className="text-3xl font-semibold mb-8 mt-2 text-white flex items-center">Popular TV Series
         <button
-          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 flex items-center"
+          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full shadow-lg transition-all duration-300"
           onClick={openRandomSeries}
         >
-          <FaRandom className="mr-2" />
+          <FaRandom />
         </button>
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">

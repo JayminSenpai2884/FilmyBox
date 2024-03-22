@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition duration-300 ${
         showBackground ? "bg-zinc-900" : ""
       }`}
     >
@@ -47,37 +47,37 @@ const Navbar = () => {
         <Link href="/">
           <span className="block">
             <img
-              className="h-10 lg:h-14 max-w-xs transition-transform transform hover:scale-110 rounded-full"
+              className="h-10 lg:h-14 max-w-xs transition-transform transform hover:scale-105 rounded-full"
               src="/images/logo.png"
               alt="FilmyBox Logo"
             />
           </span>
         </Link>
         <div className="hidden lg:flex items-center space-x-15 text-lg">
-          <div className="hidden lg:flex items-center space-x-15 text-lg">
+          <div className="hidden lg:flex items-center space-x-15 text-lg ">
             <div className="flex items-center justify-center space-x-10">
               <Link href="/movies">
-                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                <span className="text-white transition duration-200 hover:text-gray-400 cursor-pointer">
                   Movies
                 </span>
               </Link>
               <Link href="/series">
-                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                <span className="text-white transition duration-200 hover:text-gray-400 cursor-pointer">
                   Series
                 </span>
               </Link>
               <Link href="/celebPage">
-                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                <span className="text-white transition duration-200 hover:text-gray-400 cursor-pointer">
                   Celebrity Playlist
                 </span>
               </Link>
               <Link href="/event">
-                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                <span className="text-white transition duration-200 hover:text-gray-400 cursor-pointer">
                   Events
                 </span>
               </Link>
               <Link href="/accessibility">
-                <span className="text-white transition duration-300 hover:text-gray-300 hover:text-xl hover:opacity-80 cursor-pointer">
+                <span className="text-white transition duration-200 hover:text-gray-400 cursor-pointer">
                   Accessibility
                 </span>
               </Link>
@@ -87,23 +87,23 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-4 lg:space-x-0">
           <div onClick={toggleMobileMenu} className="lg:hidden cursor-pointer">
-            <MagnifyingGlassIcon className="w-6 text-gray-300 hover:text-white transition rounded-full" />
+            <MagnifyingGlassIcon className="w-6 text-gray-300 hover:text-gray-400 transition rounded-full" />
           </div>
           <div onClick={toggleMobileMenu} className="lg:hidden cursor-pointer">
-            <BellIcon className="w-6 text-gray-300 hover:text-white transition rounded-full" />
+            <BellIcon className="w-6 text-gray-300 hover:text-gray-400 transition rounded-full" />
           </div>
           <div
             onClick={toggleAccountMenu}
             className="flex items-center cursor-pointer relative group"
           >
-            <div className="w-10 h-10 rounded-full overflow-hidden group-hover:ring-2 group-hover:ring-white">
+            <div className="w-10 h-10 rounded-full overflow-hidden group-hover:ring-2 group-hover:ring-gray-400">
               <img
                 className="w-full h-full rounded-full"
                 src="/images/avtar.png"
                 alt=""
               />
             </div>
-            <ChevronDownIcon className="w-4 ml-2 text-gray-300 group-hover:text-white transition" />
+            <ChevronDownIcon className="w-4 ml-2 text-gray-300 group-hover:text-gray-400 transition" />
             <AccountMenu visible={showAccountMenu} />
           </div>
         </div>

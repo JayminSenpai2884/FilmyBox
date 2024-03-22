@@ -1,5 +1,3 @@
-// CelebrityPlaylist.tsx
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
@@ -8,7 +6,6 @@ interface Celebrity {
   id: number;
   name: string;
   profile_path: string;
-  known_for_department: string;
 }
 
 interface Movie {
@@ -113,7 +110,7 @@ const CelebrityPlaylist: React.FC = () => {
   return (
     <>
       {selectedCelebrity && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="p-8 bg-gray-900 rounded-lg overflow-hidden shadow-lg max-w-screen-lg w-full h-3/4 transform transition-all duration-300">
             <button
               className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 focus:outline-none"
@@ -167,7 +164,7 @@ const CelebrityPlaylist: React.FC = () => {
       )}
 
       {selectedMovie && (
-        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50">
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
           <div className="p-8 bg-gray-900 rounded-lg overflow-hidden shadow-lg max-w-screen-lg w-full h-3/4 transform transition-all duration-300">
             <button
               className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 focus:outline-none"
@@ -209,7 +206,7 @@ const CelebrityPlaylist: React.FC = () => {
       )}
 
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-white mt-10 text-3xl font-semibold mb-8 text-center bg-gray-700 py-2 rounded-lg">
+        <h1 className="text-white mt-10 text-3xl font-semibold mb-8 text-center py-2 rounded-lg">
           Playlists Selected by Celebrities
         </h1>
 
@@ -228,7 +225,6 @@ const CelebrityPlaylist: React.FC = () => {
               <h2 className="text-xl font-semibold mb-2 text-white">
                 {celebrity.name}
               </h2>
-              {/* <p className="text-gray-300">{celebrity.known_for_department}</p> */}
             </div>
           ))}
         </div>

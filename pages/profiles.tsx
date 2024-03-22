@@ -39,7 +39,7 @@ const Profiles = () => {
         <div className="text-3xl md:text-6xl text-white mb-4">
           User: <span className="font-bold">{user?.name}</span>
         </div>
-      </div>
+      </div>  
       <div className="flex items-center justify-center gap-10 mt-10">
         <div onClick={() => router.push("/")}>
           <div className="group flex-row width-44 mx-auto">
