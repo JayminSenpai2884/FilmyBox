@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import YouTube from 'react-youtube';
 import { FaRandom } from "react-icons/fa";
 
@@ -24,40 +24,40 @@ const MoviesDB = () => {
   const popular = "https://api.themoviedb.org/3/movie/popular";
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${popular}?api_key=${apiKey}`);
-      const result = response.data.results;
-      setMovies(result);
-      await getVid(result);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  };
-
-  const getVid = async (movies: Movie[]) => {
-    const videoPromises = movies.map(async (movie) => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}&language=en-US`);
-        const videoData = response.data.results;
-        if (videoData.length > 0) {
-          return {
-            id: movie.id.toString(),
-            key: videoData[0].key
-          };
-        }
-        return null;
+        const response = await axios.get(`${popular}?api_key=${apiKey}`);
+        const result = response.data.results;
+        setMovies(result);
+        await getVid(result);
       } catch (error) {
-        console.error("Error fetching video for movie ID:", movie.id, error);
-        return null;
+        console.error("Error fetching movies:", error);
       }
-    });
-    const videoResults = await Promise.all(videoPromises);
-    setVideos(videoResults.filter(video => video !== null) as Video[]);
-  };
+    };
+
+    const getVid = async (movies: Movie[]) => {
+      const videoPromises = movies.map(async (movie) => {
+        try {
+          const response = await axios.get(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}&language=en-US`);
+          const videoData = response.data.results;
+          if (videoData.length > 0) {
+            return {
+              id: movie.id.toString(),
+              key: videoData[0].key
+            };
+          }
+          return null;
+        } catch (error) {
+          console.error("Error fetching video for movie ID:", movie.id, error);
+          return null;
+        }
+      });
+      const videoResults = await Promise.all(videoPromises);
+      setVideos(videoResults.filter(video => video !== null) as Video[]);
+    };
+
+    fetchData();
+  }, [apiKey, popular]);
 
   const openVideoPopup = (movie: Movie) => {
     setSelectedMovie(movie);
@@ -74,14 +74,18 @@ const MoviesDB = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 mt-10">
-      <h1 className="text-3xl font-semibold mb-8 text-white flex items-center">Popular Movies
-        <button
-          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full shadow-lg transition-all duration-300"
-          onClick={openRandomMovie}
-        >
-          <FaRandom />
-        </button>
+    <div className="container mx-auto px-4 py-8 mt-10  min-h-screen text-white">
+      <h1 className="text-3xl font-semibold mb-8 flex items-center">
+        Popular Movies
+        <div>
+      <button
+        className="ml-4 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full shadow-lg transition-all duration-300 group cursor-pointer outline-none hover:rotate-90 "
+        onClick={openRandomMovie}
+        title="Click me!!"
+      >
+        <FaRandom className="text-white stroke-blue-400  group-hover:fill-grey-800 group-active:stroke-blue-200 group-active:fill-white group-active:duration-0 duration-300" />
+      </button>
+    </div>
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {movies.map((item) => (
@@ -97,20 +101,20 @@ const MoviesDB = () => {
       </div>
       {selectedMovie && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-75 z-50" onClick={closeVideoPopup}>
-          <div className="p-8 bg-white rounded-lg overflow-hidden shadow-lg max-w-3xl">
+          <div className="p-8 bg-gray-800 rounded-lg overflow-hidden shadow-lg max-w-3xl">
             <h2 className="text-3xl font-semibold mb-4">{selectedMovie.title}</h2>
             <p className="text-lg mb-4">{selectedMovie.overview}</p>
             <p className="text-base">Release Date: {selectedMovie.release_date}</p>
             <br></br>
-            <div> 
+            <div>
               {videos.find(video => video.id === selectedMovie.id.toString()) ? (
                 <YouTube style={{
-                    width: '644px',
-                    height: '367px', 
-                    border: 'none',
-                    borderRadius: '8px',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                  }} videoId={videos.find(video => video.id === selectedMovie.id.toString())!.key}></YouTube>
+                  width: '644px',
+                  height: '367px',
+                  border: 'none',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                }} videoId={videos.find(video => video.id === selectedMovie.id.toString())!.key}></YouTube>
               ) : (
                 <p>No video available</p>
               )}

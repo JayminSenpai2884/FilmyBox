@@ -1,5 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import YouTube from 'react-youtube';
 import { FaRandom } from "react-icons/fa";
 
@@ -24,40 +24,40 @@ const TVSeriesDB = () => {
   const popularSeries = "https://api.themoviedb.org/3/tv/popular";
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(`${popularSeries}?api_key=${apiKey}`);
-      const result = response.data.results;
-      setSeries(result);
-      await getVid(result);
-    } catch (error) {
-      console.error("Error fetching TV series:", error);
-    }
-  };
-
-  const getVid = async (series: TVSeries[]) => {
-    const videoPromises = series.map(async (series) => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`https://api.themoviedb.org/3/tv/${series.id}/videos?api_key=${apiKey}&language=en-US`);
-        const videoData = response.data.results;
-        if (videoData.length > 0) {
-          return {
-            id: series.id.toString(),
-            key: videoData[0].key
-          };
-        }
-        return null;
+        const response = await axios.get(`${popularSeries}?api_key=${apiKey}`);
+        const result = response.data.results;
+        setSeries(result);
+        await getVid(result);
       } catch (error) {
-        console.error("Error fetching video for TV series ID:", series.id, error);
-        return null;
+        console.error("Error fetching TV series:", error);
       }
-    });
-    const videoResults = await Promise.all(videoPromises);
-    setVideos(videoResults.filter(video => video !== null) as Video[]);
-  };
+    };
+
+    const getVid = async (series: TVSeries[]) => {
+      const videoPromises = series.map(async (series) => {
+        try {
+          const response = await axios.get(`https://api.themoviedb.org/3/tv/${series.id}/videos?api_key=${apiKey}&language=en-US`);
+          const videoData = response.data.results;
+          if (videoData.length > 0) {
+            return {
+              id: series.id.toString(),
+              key: videoData[0].key
+            };
+          }
+          return null;
+        } catch (error) {
+          console.error("Error fetching video for TV series ID:", series.id, error);
+          return null;
+        }
+      });
+      const videoResults = await Promise.all(videoPromises);
+      setVideos(videoResults.filter(video => video !== null) as Video[]);
+    };
+
+    fetchData();
+  }, [apiKey, popularSeries]);
 
   const openVideoPopup = (series: TVSeries) => {
     setSelectedSeries(series);
@@ -77,12 +77,13 @@ const TVSeriesDB = () => {
     <div className="container mx-auto px-4 py-8">
       <br></br>
       <h1 className="text-3xl font-semibold mb-8 mt-2 text-white flex items-center">Popular TV Series
-        <button
-          className="ml-4 bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full shadow-lg transition-all duration-300"
-          onClick={openRandomSeries}
-        >
-          <FaRandom />
-        </button>
+      <button
+        className="ml-4 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full shadow-lg transition-all duration-300 group cursor-pointer outline-none hover:rotate-90 "
+        onClick={openRandomSeries}
+        title="Click me!!"
+      >
+        <FaRandom className="text-white stroke-blue-400  group-hover:fill-grey-800 group-active:stroke-blue-200 group-active:fill-white group-active:duration-0 duration-300" />
+      </button>
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {series.map((item) => (

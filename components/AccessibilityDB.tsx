@@ -25,63 +25,64 @@ const MoviesDB = () => {
   const genreIdForSilentMovies = 10752; // Genre ID for silent films
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&vote_count.gte=100&with_genres=${genreIdForSilentMovies}`
-      );
-      const result = response.data.results;
-      setMovies(result);
-      await getVid(result);
-    } catch (error) {
-      console.error("Error fetching movies:", error);
-    }
-  };
-
-  const getVid = async (movies: Movie[]) => {
-    const videoPromises = movies.map(async (movie) => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}&language=en-US`
+          `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&sort_by=popularity.desc&include_adult=false&include_video=true&page=1&vote_count.gte=100&with_genres=${genreIdForSilentMovies}`
         );
-        const videoData = response.data.results;
-        const hasSubtitles = await checkSubtitles(movie.id);
-        const trailer = videoData.find((video: { type: string }) => video.type === "Trailer");
-        if (trailer) {
-          return {
-            id: movie.id.toString(),
-            key: trailer.key,
-            hasSubtitles: hasSubtitles,
-          };
-        }
-        return null;
+        const result = response.data.results;
+        setMovies(result);
+        await getVid(result);
       } catch (error) {
-        console.error("Error fetching video for movie ID:", movie.id, error);
-        return null;
+        console.error("Error fetching movies:", error);
       }
-    });
-    const videoResults = await Promise.all(videoPromises);
-    setVideos(videoResults.filter((video) => video !== null) as Video[]);
-  };
+    };
 
-  const checkSubtitles = async (movieId: number) => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movieId}/translations?api_key=${apiKey}`
-      );
-      const translations = response.data.translations;
-      const hasSubtitles = translations.some(
-        (translation: any) => translation.iso_639_1 === "en"
-      );
-      return hasSubtitles;
-    } catch (error) {
-      console.error("Error fetching subtitles for movie ID:", movieId, error);
-      return false;
-    }
-  };
+    fetchData(); // Call fetchData when the component mounts or when apiKey/genreIdForSilentMovies changes
+
+    const getVid = async (movies: Movie[]) => {
+      const videoPromises = movies.map(async (movie) => {
+        try {
+          const response = await axios.get(
+            `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}&language=en-US`
+          );
+          const videoData = response.data.results;
+          const hasSubtitles = await checkSubtitles(movie.id);
+          const trailer = videoData.find((video: { type: string }) => video.type === "Trailer");
+          if (trailer) {
+            return {
+              id: movie.id.toString(),
+              key: trailer.key,
+              hasSubtitles: hasSubtitles,
+            };
+          }
+          return null;
+        } catch (error) {
+          console.error("Error fetching video for movie ID:", movie.id, error);
+          return null;
+        }
+      });
+      const videoResults = await Promise.all(videoPromises);
+      setVideos(videoResults.filter((video) => video !== null) as Video[]);
+    };
+
+    const checkSubtitles = async (movieId: number) => {
+      try {
+        const response = await axios.get(
+          `https://api.themoviedb.org/3/movie/${movieId}/translations?api_key=${apiKey}`
+        );
+        const translations = response.data.translations;
+        const hasSubtitles = translations.some(
+          (translation: any) => translation.iso_639_1 === "en"
+        );
+        return hasSubtitles;
+      } catch (error) {
+        console.error("Error fetching subtitles for movie ID:", movieId, error);
+        return false;
+      }
+    };
+
+  }, [apiKey, genreIdForSilentMovies]); // Include apiKey and genreIdForSilentMovies in the dependency array
 
   const openVideoPopup = (movie: Movie) => {
     setSelectedMovie(movie);
