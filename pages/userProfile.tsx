@@ -19,7 +19,7 @@ const UserProfile = () => {
             alt="User Avatar"
           />
           <div className="ml-6">
-            <p className="text-xl font-semibold text-white">
+            <p className="text-2xl font-semibold text-white">
               {currentUser?.name}
             </p>
             <p className="text-sm text-white">{currentUser?.email}</p>
@@ -31,10 +31,20 @@ const UserProfile = () => {
       </div>
       <div className="text-center mt-4">
         <Link href="/" passHref>
-          <span className="text-white text-sm transition duration-300 hover:text-gray-300 hover:opacity-80">
+          <button className="text-white text-sm transition duration-300 hover:text-gray-300 hover:opacity-80">
             Back to Home
-          </span>
+          </button>
         </Link>
+      </div>
+
+      <div className="text-white text-center mt-8">
+        <p className="text-lg">Welcome to your profile, {currentUser?.name}!</p>
+        <p className="text-base mt-4">
+          Here you can manage your favorite movies and preferences.
+        </p>
+        <p className="text-sm mt-2">
+          Don't forget to explore more features on our platform!
+        </p>
       </div>
     </div>
   );

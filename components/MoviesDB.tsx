@@ -20,6 +20,7 @@ const MoviesDB = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const apiKey = "f0b5c1d3307aae122961663d10864986";
   const popular = "https://api.themoviedb.org/3/movie/popular";
 
@@ -73,22 +74,39 @@ const MoviesDB = () => {
     openVideoPopup(randomMovie);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredMovies = movies.filter(movie =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto px-4 py-8 mt-10  min-h-screen text-white">
       <h1 className="text-3xl font-semibold mb-8 flex items-center">
         Popular Movies
         <div>
-      <button
-        className="ml-4 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full shadow-lg transition-all duration-300 group cursor-pointer outline-none hover:rotate-90 "
-        onClick={openRandomMovie}
-        title="Click me!!"
-      >
-        <FaRandom className="text-white stroke-blue-400  group-hover:fill-grey-800 group-active:stroke-blue-200 group-active:fill-white group-active:duration-0 duration-300" />
-      </button>
-    </div>
+          <button
+            className="ml-4 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded-full shadow-lg transition-all duration-300 group cursor-pointer outline-none hover:rotate-90 "
+            onClick={openRandomMovie}
+            title="Click me!!"
+          >
+            <FaRandom className="text-white stroke-blue-400  group-hover:fill-grey-800 group-active:stroke-blue-200 group-active:fill-white group-active:duration-0 duration-300" />
+          </button>
+        </div>
       </h1>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search movies..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="bg-gray-800 px-4 py-2 rounded-md w-full text-white"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {movies.map((item) => (
+        {filteredMovies.map((item) => (
           <div key={item.id} className="relative overflow-hidden rounded-lg shadow-lg">
             <img
               className="w-full h-auto object-cover transition-transform duration-300 transform scale-100 hover:scale-105 rounded-t-lg cursor-pointer"

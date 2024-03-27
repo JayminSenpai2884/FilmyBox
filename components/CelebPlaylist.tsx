@@ -17,11 +17,6 @@ interface Movie {
   vote_average: number;
 }
 
-interface Genre {
-  id: number;
-  name: string;
-}
-
 interface Video {
   id: string;
   key: string;
@@ -30,7 +25,6 @@ interface Video {
 const CelebrityPlaylist: React.FC = () => {
   const [celebrities, setCelebrities] = useState<Celebrity[]>([]);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedCelebrity, setSelectedCelebrity] = useState<Celebrity | null>(
     null
   );
@@ -39,22 +33,17 @@ const CelebrityPlaylist: React.FC = () => {
   const apiKey = "f0b5c1d3307aae122961663d10864986";
 
   useEffect(() => {
-    fetchCelebrities();
-    fetchGenres();
+    fetchTrendingCelebrities();
   }, []);
 
-  const fetchCelebrities = async () => {
+  const fetchTrendingCelebrities = async () => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&language=en-US&page=1`
+        `https://api.themoviedb.org/3/trending/person/week?api_key=${apiKey}`
       );
-      // Filter out Anthony Bhagyaraj
-      const filteredCelebrities = response.data.results.filter(
-        (celebrity: Celebrity) => celebrity.name !== "Anthony Bhagyaraj"
-      );
-      setCelebrities(filteredCelebrities.slice(0, 20)); // Limit to the first 20 celebrities
+      setCelebrities(response.data.results.slice(0, 20)); // Limit to the first 20 trending celebrities
     } catch (error) {
-      console.error("Error fetching celebrities:", error);
+      console.error("Error fetching trending celebrities:", error);
     }
   };
 
@@ -80,24 +69,6 @@ const CelebrityPlaylist: React.FC = () => {
     } catch (error) {
       console.error("Error fetching videos for movie:", error);
     }
-  };
-
-  const fetchGenres = async () => {
-    try {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
-      );
-      setGenres(response.data.genres);
-    } catch (error) {
-      console.error("Error fetching genres:", error);
-    }
-  };
-
-  const getGenreNames = (genreIds: number[]) => {
-    return genreIds.map((id) => {
-      const genre = genres.find((genre) => genre.id === id);
-      return genre ? genre.name : "";
-    });
   };
 
   const closePopup = () => {
@@ -150,12 +121,6 @@ const CelebrityPlaylist: React.FC = () => {
                     {movie.title}
                   </h3>
                   <p className="text-gray-300 mb-2">{movie.overview}</p>
-                  <p className="text-gray-300 mb-2">
-                    Genres: {getGenreNames(movie.genre_ids).join(", ")}
-                  </p>
-                  <p className="text-gray-300 mb-2">
-                    Rating: {movie.vote_average}
-                  </p>
                 </div>
               ))}
             </div>
@@ -207,30 +172,30 @@ const CelebrityPlaylist: React.FC = () => {
 
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-white mt-10 text-3xl font-semibold mb-8 text-center py-2 rounded-lg">
-          Playlists Selected by Celebrities
+          Trending Celebrities
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {celebrities.map((celebrity) => (
-            <div
-              key={celebrity.id}
-              className="bg-gray-800 p-4 rounded-lg shadow-md transform hover:scale-105 transition-transform cursor-pointer flex flex-col items-center"
-              onClick={() => fetchMoviesByCelebrity(celebrity)}
-            >
-              <img
-                src={`https://image.tmdb.org/t/p/w500${celebrity.profile_path}`}
-                alt={celebrity.name}
-                className="w-32 h-auto mb-2 rounded-full"
-              />
-              <h2 className="text-xl font-semibold mb-2 text-white">
-                {celebrity.name}
-              </h2>
-            </div>
-          ))}
-        </div>
-      </div>
-    </>
-  );
+{celebrities.map((celebrity) => (
+  <div
+    key={celebrity.id}
+    className="bg-gray-800 p-4 rounded-lg shadow-md transform hover:scale-105 transition-transform cursor-pointer flex flex-col items-center"
+    onClick={() => fetchMoviesByCelebrity(celebrity)}
+  >
+    <img
+      src={`https://image.tmdb.org/t/p/w500${celebrity.profile_path}`}
+      alt={celebrity.name}
+      className="w-32 h-auto mb-2 rounded-full"
+    />
+    <h2 className="text-xl font-semibold mb-2 text-white">
+      {celebrity.name}
+    </h2>
+  </div>
+))}
+</div>
+</div>
+</>
+);
 };
 
 export default CelebrityPlaylist;

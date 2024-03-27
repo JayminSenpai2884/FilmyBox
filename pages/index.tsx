@@ -14,6 +14,7 @@ import movies from "@/pages/movies";
 import series from "@/pages/series";
 import MoviesDB from "@/components/MoviesDB";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Footer from "@/components/Footer";
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
 
@@ -45,6 +46,8 @@ const Home = () => {
         <MovieList title="Populer Now 🔥" data={movies} />
         {/* <MovieList title="My Favorites 🥰" data={favorites} /> */}
       </div>
+      <Footer></Footer>
+
     </>
   );
 };

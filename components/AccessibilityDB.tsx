@@ -150,7 +150,6 @@ const MoviesDB = () => {
                             )!.key
                           }
                         ></YouTube>
-                        {/* Remove redundant condition */}
                       </div>
                     )}
                   </div>
