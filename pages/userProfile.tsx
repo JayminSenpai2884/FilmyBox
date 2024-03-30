@@ -42,9 +42,7 @@ const UserProfile = () => {
         <p className="text-base mt-4">
           Here you can manage your favorite movies and preferences.
         </p>
-        <p className="text-sm mt-2">
-          Don't forget to explore more features on our platform!
-        </p>
+        
       </div>
     </div>
   );

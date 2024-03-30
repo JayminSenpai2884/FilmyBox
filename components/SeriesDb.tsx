@@ -20,6 +20,7 @@ const TVSeriesDB = () => {
   const [series, setSeries] = useState<TVSeries[]>([]);
   const [videos, setVideos] = useState<Video[]>([]);
   const [selectedSeries, setSelectedSeries] = useState<TVSeries | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const apiKey = "f0b5c1d3307aae122961663d10864986";
   const popularSeries = "https://api.themoviedb.org/3/tv/popular";
 
@@ -73,6 +74,14 @@ const TVSeriesDB = () => {
     openVideoPopup(randomSeries);
   };
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredSeries = series.filter(series =>
+    series.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <br></br>
@@ -85,8 +94,17 @@ const TVSeriesDB = () => {
         <FaRandom className="text-white stroke-blue-400  group-hover:fill-grey-800 group-active:stroke-blue-200 group-active:fill-white group-active:duration-0 duration-300" />
       </button>
       </h1>
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search TV series..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className="bg-gray-800 px-4 py-2 rounded-md w-full text-white"
+        />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        {series.map((item) => (
+        {filteredSeries.map((item) => (
           <div key={item.id} className="relative overflow-hidden rounded-lg shadow-lg">
             <img
               className="w-full h-auto object-cover transition-transform duration-300 transform scale-100 hover:scale-105 rounded-t-lg cursor-pointer"

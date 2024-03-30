@@ -30,7 +30,7 @@ const Profiles = () => {
   const { data: user } = useCurrentUser();
 
   useEffect(() => {
-    toast.success("Successfully logged in!");
+    toast.success("Successfully logged in!✅");
   }, []);
 
   return (
@@ -56,9 +56,7 @@ const Profiles = () => {
             <div className="text-2xl md:text-4xl text-white">
               Email: <span className="font-bold">{user?.email}</span>
             </div>
-            <div className="text-xl md:text-2xl text-white">
-              Role: <span className="font-bold">{user?.role}</span>
-            </div>
+            
           </div>
         </div>
       </div>
