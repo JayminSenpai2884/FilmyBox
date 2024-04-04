@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
+import { HiOutlineCursorClick } from "react-icons/hi";
 
 interface Celebrity {
   id: number;
@@ -176,26 +177,34 @@ const CelebrityPlaylist: React.FC = () => {
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-{celebrities.map((celebrity) => (
-  <div
-    key={celebrity.id}
-    className="bg-gray-800 p-4 rounded-lg shadow-md transform hover:scale-105 transition-transform cursor-pointer flex flex-col items-center"
-    onClick={() => fetchMoviesByCelebrity(celebrity)}
-  >
-    <img
-      src={`https://image.tmdb.org/t/p/w500${celebrity.profile_path}`}
-      alt={celebrity.name}
-      className="w-32 h-auto mb-2 rounded-full"
-    />
-    <h2 className="text-xl font-semibold mb-2 text-white">
-      {celebrity.name}
-    </h2>
-  </div>
-))}
-</div>
-</div>
-</>
-);
+          {celebrities.map((celebrity) => (
+            <div
+              key={celebrity.id}
+              className="bg-gray-800 p-4 rounded-lg shadow-md transform hover:scale-105 transition-transform cursor-pointer flex flex-col items-center"
+              onClick={() => fetchMoviesByCelebrity(celebrity)}
+            >
+              <img
+                src={`https://image.tmdb.org/t/p/w500${celebrity.profile_path}`}
+                alt={celebrity.name}
+                className="w-32 h-auto mb-2 rounded-full"
+              />
+              <h2 className="text-xl font-semibold mb-2 text-white">
+                {celebrity.name}
+              </h2>
+              {/* Add click here button/icon below each celebrity card */}
+              <button className="flex items-center bg-blue-500 text-white py-1 px-2 rounded-md hover:bg-blue-600 transition duration-300">
+                <HiOutlineCursorClick
+                  className="w-4 h-4 mr-1"
+                >
+                </HiOutlineCursorClick>
+                Click
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default CelebrityPlaylist;

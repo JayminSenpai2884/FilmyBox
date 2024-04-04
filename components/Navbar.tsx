@@ -4,7 +4,7 @@ import { MagnifyingGlassIcon, BellIcon, ChevronDownIcon } from "@heroicons/react
 import Link from "next/link";
 import AccountMenu from "@/components/AccountMenu";
 import MobileMenu from "@/components/MobileMenu";
-import NavbarItem from "@/components/NavbarItem";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 interface SearchResult {
   id: number;
@@ -114,11 +114,9 @@ const Navbar = () => {
 
         <div className="flex items-center space-x-4 lg:space-x-0">
           <div onClick={toggleMobileMenu} className="lg:hidden cursor-pointer">
-            <MagnifyingGlassIcon className="w-6 text-gray-300 hover:text-gray-400 transition rounded-full" />
+            <RxHamburgerMenu className="w-6 text-gray-300 hover:text-gray-400 transition rounded-full" />
           </div>
-          <div onClick={toggleMobileMenu} className="lg:hidden cursor-pointer">
-            <BellIcon className="w-6 text-gray-300 hover:text-gray-400 transition rounded-full" />
-          </div>
+          
           <div
             onClick={toggleAccountMenu}
             className="flex items-center cursor-pointer relative group"
